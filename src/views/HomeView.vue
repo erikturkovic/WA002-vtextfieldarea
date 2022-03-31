@@ -11,10 +11,10 @@
           ></v-text-field>
         </v-col>
       </v-row>
-      <v-btn rounded color="primary" dark> OK </v-btn>
+      <v-btn rounded color="primary" dark @click="fetchData()"> OK </v-btn>
       <v-data-table
         :headers="headers"
-        :items="desserts"
+        :items="name"
         :items-per-page="1"
         class="elevation-1"
       ></v-data-table>
@@ -36,31 +36,23 @@ export default {
           text: "Ime",
           align: "start",
           sortable: false,
-          value: "",
+          value: "name",
         },
-        { text: "Države", value: "drzave" },
-        { text: "Godine", value: "godine" },
-        { text: "Spol", value: "spol" },
+        { text: "Država", value: "nat" },
+        { text: "Godine", value: "age" },
+        { text: "Spol", value: "gender" },
       ],
     };
   },
-
-  async mounted() {
-    let fecnatio = await fetch("https://api.nationalize.io/?name=" + this.name);
-    let fecage = await fetch("https://api.agify.io/?name=" + this.name);
-    let fecgender = await fetch("https://api.genderize.io/?name=" + this.name);
-
-    let thenation = await fecnatio.json();
-    let theage = await fecage.json();
-    let thegender = await fecgender.json();
-
-    console.log(nation);
-    console.log(age);
-    console.log(gender);
-
-    this.nation = thenation;
-    this.age = theage;
-    this.gender = thegender;
+  methods: {
+    async fetchData(name) {
+      let nat = await fetch("https://api.nationalize.io/?name=" + this.name);
+      let thenation = await nat.json();
+      let age = await fetch("https://api.agify.io/?name=" + this.name);
+      let theage = await age.json();
+      let gender = await fetch("https://api.genderize.io/?name=" + this.name);
+      let thegender = await gender.json();
+    },
   },
 };
 </script>
