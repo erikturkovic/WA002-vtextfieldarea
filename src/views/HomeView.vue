@@ -14,14 +14,12 @@
       <v-btn rounded color="primary" dark @click="fetchData()"> OK </v-btn>
       <v-data-table
         :headers="headers"
-        :items="thegender"
+        :items="age"
         :items-per-page="1"
         class="elevation-1"
       ></v-data-table>
-      
     </v-container>
   </v-form>
-  
 </template>
 
 <script>
@@ -40,25 +38,25 @@ export default {
           sortable: false,
           value: "name",
         },
-        { text: "Država", value: "nationality" },
+        { text: "Država", value: "country" },
+        { text: "Vjerojatnost države", value: "probability of country" },
         { text: "Godine", value: "age" },
         { text: "Spol", value: "gender" },
+        { text: "Vjerojatnost spola", value: "probability of gender" },
       ],
     };
   },
   methods: {
     async fetchData(name) {
-      let nat = await fetch("https://api.nationalize.io/?name=" + this.name);
-      let thenation = await nat.json();
-      console.log(thenation)
-      let age = await fetch("https://api.agify.io/?name=" + this.name);
-      let theage = await age.json();
-      console.log(theage)
-      let gender = await fetch("https://api.genderize.io/?name=" + this.name);
-      let thegender = await gender.json();
-      console.log(thegender)
-
-      this.age=theage;
+      let thenation = await fetch("https://api.nationalize.io/?name=" + this.name);
+      let nation = await thenation.json();
+      console.log(nation);
+      let theage = await fetch("https://api.agify.io/?name=" + this.name);
+      let age = await theage.json();
+      console.log(age);
+      let thegender = await fetch("https://api.genderize.io/?name=" + this.name);
+      let gender = await thegender.json();
+      console.log(gender);      
     },
   },
 };
