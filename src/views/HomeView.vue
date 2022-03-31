@@ -14,7 +14,7 @@
       <v-btn rounded color="primary" dark @click="fetchData()"> OK </v-btn>
       <v-data-table
         :headers="headers"
-        :items="age"
+        :items="placeholder"
         :items-per-page="1"
         class="elevation-1"
       ></v-data-table>
@@ -56,7 +56,8 @@ export default {
       console.log(age);
       let thegender = await fetch("https://api.genderize.io/?name=" + this.name);
       let gender = await thegender.json();
-      console.log(gender);      
+      console.log(gender);     
+       
     },
   },
 };
