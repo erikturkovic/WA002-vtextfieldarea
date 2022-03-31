@@ -14,12 +14,14 @@
       <v-btn rounded color="primary" dark @click="fetchData()"> OK </v-btn>
       <v-data-table
         :headers="headers"
-        :items="name"
+        :items="thegender"
         :items-per-page="1"
         class="elevation-1"
       ></v-data-table>
+      
     </v-container>
   </v-form>
+  
 </template>
 
 <script>
@@ -38,7 +40,7 @@ export default {
           sortable: false,
           value: "name",
         },
-        { text: "Država", value: "nat" },
+        { text: "Država", value: "nationality" },
         { text: "Godine", value: "age" },
         { text: "Spol", value: "gender" },
       ],
@@ -48,10 +50,15 @@ export default {
     async fetchData(name) {
       let nat = await fetch("https://api.nationalize.io/?name=" + this.name);
       let thenation = await nat.json();
+      console.log(thenation)
       let age = await fetch("https://api.agify.io/?name=" + this.name);
       let theage = await age.json();
+      console.log(theage)
       let gender = await fetch("https://api.genderize.io/?name=" + this.name);
       let thegender = await gender.json();
+      console.log(thegender)
+
+      this.age=theage;
     },
   },
 };
